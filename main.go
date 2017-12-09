@@ -1,34 +1,19 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 )
 
-type User struct {
-	Firstname string `json:"firstname"`
-	Lastname  string `json:"lastname"`
-	Age       int    `json:"age"`
-}
-
 func main() {
-	http.HandleFunc("/decode", func(w http.ResponseWriter, r *http.Request) {
-		var user User
-		json.NewDecoder(r.Body).Decode(&user)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-		fmt.Fprintf(w, "%s %s is %d years old!", user.Firstname, user.Lastname, user.Age)
-	})
+	tmpl := template.Must(template.ParseFiles("./template/index.html"))
 
-	http.HandleFunc("/encode", func(w http.ResponseWriter, r *http.Request) {
-		peter := User{
-			Firstname: "John",
-			Lastname:  "Doe",
-			Age:       25,
-		}
-
-		json.NewEncoder(w).Encode(peter)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data := ""
+		tmpl.Execute(w, data)
 	})
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
