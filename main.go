@@ -1,22 +1,37 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
-func main() {
-	r := mux.NewRouter()
-	r.HandleFunc("/books/{title}/page/{page}", func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		title := vars["title"]
-		page := vars["page"]
+// Todo is the structure of the tasks
+type Todo struct {
+	Title string
+	Done  bool
+}
 
-		fmt.Fprintf(w, "You've requested the book: %s on page %s\n", title, page)
+// TodoPageData is que structure of the page
+type TodoPageData struct {
+	PageTitle string
+	Todos     []Todo
+}
+
+func main() {
+	tmpl := template.Must(template.ParseFiles("layout.html"))
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data := TodoPageData{
+			PageTitle: "My TODO list",
+			Todos: []Todo{
+				{Title: "Task 1", Done: false},
+				{Title: "Task 2", Done: true},
+				{Title: "Task 3", Done: true},
+			},
+		}
+		tmpl.Execute(w, data)
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
