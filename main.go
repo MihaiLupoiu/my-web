@@ -16,5 +16,5 @@ func main() {
 		tmpl.Execute(w, data)
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
