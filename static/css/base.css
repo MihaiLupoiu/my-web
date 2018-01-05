@@ -4,8 +4,6 @@ a {
     display: inline-block;    
 }
 
-
-
 a:hover, a:visited, a:link, a:active {
     text-decoration: none;
 }
@@ -29,6 +27,10 @@ img {
     margin: auto;
     display: block;
 }
+ul, li { 
+    padding:0 
+} 
+
 .grayscale {
     filter: grayscale(100%);
 }
@@ -42,10 +44,54 @@ https://www.dafont.com/es/social-circles.font
     src: url("http://localhost/static/fonts/socila-circles/SocialCircles.woff") format("woff"), url("http://lupoiu.com/static/fonts/socila-circles/SocialCircles.otf")  format("opentype");
 }
 
-.socialnet{
+.social-links{
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-top: 0px;
+    
+    display: block;
+    display: inline-block;
+    position: fixed;
+    width:160px;
+    left: 50%;
+    bottom: 50px;
+    margin-left: -90px;
+    padding: 0;
+    list-style-type: none;
+}
+
+.social-links > li {
+    display: inline-block;
+  }
+
+.social-link-item{
+    display: inline-block;
     font-family: socilaCircles;
-    font-size: 100px;
+    font-size: 50px;
     text-align: center;
+    opacity: .4;
+    margin-left: 15px;
+}
+
+.social-links .email-link-outer {
+    margin-top: 10px;
+    display: block;
+} 
+.email-link {
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    text-decoration: none;
+    font-family: "brandon-grotesque";
+    opacity: .5;
+    -webkit-transition: opacity .1s ease-in;
+}
+
+.email-link:hover,
+.email-link:focus {
+    opacity: 1;
+} 
+.social-link-item:hover{
+    opacity: 1;
 }
 
 @font-face {
